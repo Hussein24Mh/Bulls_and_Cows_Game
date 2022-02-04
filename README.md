@@ -1,7 +1,7 @@
 # Bulls and Cows Game
 It was a problem solving game algorithm from Codeforces and I made it executable file for fun , why not 
 
-# TO Play The Game
+# To Play The Game
 Download the code.exe file and try it
 
 # Rules Of The Game
