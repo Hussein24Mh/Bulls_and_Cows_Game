@@ -13,6 +13,7 @@ All_Guesses = []
 Current_Guess = []
 p1, p2, p3, p4 = 0, 0, 0, 0
 S = ''
+loop_flag = 1
 # //////////////////////////////////////////////////////////////////
 def Generate_New_Guess():
     """
@@ -41,6 +42,7 @@ def Try_Reduce_Choices():
     # based on information about bulls and cows it gets from the user
     :return: Nothing
     """
+    global Ap1, Ap2, Ap3, Ap4
 
     for i1 in range(0, len(Bulls_1)):
         fp1, fp2, fp3, fp4 = Bulls_1[i1]
@@ -166,16 +168,37 @@ def Try_Reduce_Choices():
 while True:
     # -----------------------------------------------------------------
     Generate_New_Guess()
-    print(S)
-    # -----------------------------------------------------------------
-    try:
-        bulls, cows = map(int, input().split(' '))
-    except:
-        break
-    # -----------------------------------------------------------------
-    if bulls + cows > 4:
-        break
-    if bulls == 4 and cows == 0:
+    bulls, cows = 0, 0
+    print(f'Guess -> {loop_flag} is {S}')
+    print(f'Enter Bulls Number ->>>', end=" ")
+    while True:
+        try:
+            x = int(input())
+            if not (0 <= x <= 4):
+                print("Please enter integer between 0 and 4")
+                continue
+        except:
+            print("please enter integer")
+        else:
+            bulls = x
+            break
+    print(f'Enter Cows Number ->>>', end=" ")
+    while True:
+        try:
+            x = int(input())
+            if not (0 <= x + bulls <= 4):
+                print(
+                    "Please enter integer between 0 and 4 and bulls "
+                    "and cows together between 0 and 4"
+                      )
+                continue
+        except:
+            print("please enter integer")
+        else:
+            cows = x
+            break
+    if bulls == 4:
+        print("End Of Game :GG")
         break
     # -----------------------------------------------------------------
     if bulls == 0:
@@ -204,5 +227,6 @@ while True:
         Bulls_3.append(Current_Guess)
     # -----------------------------------------------------------------
     Try_Reduce_Choices()
+    loop_flag += 1
 # End of while loop
 # ///////////////////////////////////////////////////////////////////////////
