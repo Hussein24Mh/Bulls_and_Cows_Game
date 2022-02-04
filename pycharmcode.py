@@ -1,172 +1,171 @@
 from random import choice
-
 # //////////////////////////////////////////////////////////////////
-validation_memory = {
-    'dp1': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    'dp2': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    'dp3': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    'dp4': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+Ap1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Ap2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Ap3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Ap4 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    'bulls1': [],
-    'bulls2': [],
-    'bulls3': []
-}
+Bulls_1 = []
+Bulls_2 = []
+Bulls_3 = []
 
-all_guesses = []
-current_guess = []
+All_Guesses = []
+Current_Guess = []
 p1, p2, p3, p4 = 0, 0, 0, 0
 S = ''
-
 # //////////////////////////////////////////////////////////////////
-# generate new guesses and over time these guesses choices will be
-# reduced since we take and implement information from the user
-def generate_new_guess():
-    global current_guess, S, p1, p2, p3, p4
+def Generate_New_Guess():
+    """
+    generate new guesses and over time these guesses choices will be
+    reduced since we take and implement information from the user
+    :rtype: list
+    """
+    global Current_Guess, S, p1, p2, p3, p4
 
-    p1 = choice(validation_memory['dp1'])
-    p2 = choice(validation_memory['dp2'])
-    p3 = choice(validation_memory['dp3'])
-    p4 = choice(validation_memory['dp4'])
+    p1 = choice(Ap1)
+    p2 = choice(Ap2)
+    p3 = choice(Ap3)
+    p4 = choice(Ap4)
 
-    current_guess = [p1, p2, p3, p4]
+    Current_Guess = [p1, p2, p3, p4]
 
-    if current_guess in all_guesses:
-        generate_new_guess()
+    if Current_Guess in All_Guesses:
+        Generate_New_Guess()
     else:
-        all_guesses.append(current_guess)
+        All_Guesses.append(Current_Guess)
         S = str(p1) + str(p2) + str(p3) + str(p4)
-
-
 # //////////////////////////////////////////////////////////////////
-# find_patterns function try to reduce every position choices
-# based on information about bulls and cows it gets from the user
-def find_patterns():
-    for i in range(0, len(validation_memory['bulls1'])):
-        fp1, fp2, fp3, fp4 = validation_memory['bulls1'][i]
+def Try_Reduce_Choices():
+    """
+    # find_patterns function try to reduce every position choices
+    # based on information about bulls and cows it gets from the user
+    :return: Nothing
+    """
 
-        if (fp1 in validation_memory['dp1']
-                and fp2 not in validation_memory['dp2']
-                and fp3 not in validation_memory['dp3']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp1'] = [fp1]
-
-        if (fp2 in validation_memory['dp2']
-                and fp1 not in validation_memory['dp1']
-                and fp3 not in validation_memory['dp3']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp2'] = [fp2]
-
-        if (fp3 in validation_memory['dp3']
-                and fp1 not in validation_memory['dp1']
-                and fp2 not in validation_memory['dp2']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp3'] = [fp3]
-
-        if (fp4 in validation_memory['dp4']
-                and fp1 not in validation_memory['dp1']
-                and fp2 not in validation_memory['dp2']
-                and fp3 not in validation_memory['dp3']
-        ):
-            validation_memory['dp4'] = [fp4]
-    # ---------------------------------------------------------------
-    for i in range(0, len(validation_memory['bulls2'])):
-        fp1, fp2, fp3, fp4 = validation_memory['bulls2'][i]
-
-        if (fp1 in validation_memory['dp1']
-                and fp2 in validation_memory['dp2']
-                and fp3 not in validation_memory['dp3']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp2'] = [fp2]
-        # ---------------------------------------------------
-        if (fp1 in validation_memory['dp1']
-                and fp3 in validation_memory['dp3']
-                and fp2 not in validation_memory['dp2']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp3'] = [fp3]
-        # ---------------------------------------------------
-        if (fp1 in validation_memory['dp1']
-                and fp4 in validation_memory['dp4']
-                and fp2 not in validation_memory['dp2']
-                and fp3 not in validation_memory['dp3']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp4'] = [fp4]
-        # ---------------------------------------------------
-        if (fp2 in validation_memory['dp2']
-                and fp3 in validation_memory['dp3']
-                and fp1 not in validation_memory['dp1']
-                and fp4 not in validation_memory['dp4']
-        ):
-            validation_memory['dp2'] = [fp2]
-            validation_memory['dp3'] = [fp3]
-        # ---------------------------------------------------
-        if (fp2 in validation_memory['dp2']
-                and fp4 in validation_memory['dp4']
-                and fp1 not in validation_memory['dp1']
-                and fp3 not in validation_memory['dp3']
-        ):
-            validation_memory['dp2'] = [fp2]
-            validation_memory['dp4'] = [fp4]
-        # ---------------------------------------------------
-        if (fp3 in validation_memory['dp3']
-                and fp4 in validation_memory['dp4']
-                and fp1 not in validation_memory['dp1']
-                and fp2 not in validation_memory['dp2']
-        ):
-            validation_memory['dp3'] = [fp3]
-            validation_memory['dp4'] = [fp4]
-    # ---------------------------------------------------------------
-    for i in range(0, len(validation_memory['bulls3'])):
-        fp1, fp2, fp3, fp4 = validation_memory['bulls3'][i]
-
-        if (fp1 not in validation_memory['dp1']
-                and fp2 in validation_memory['dp2']
-                and fp3 in validation_memory['dp3']
-                and fp4 in validation_memory['dp4']
-        ):
-            validation_memory['dp2'] = [fp2]
-            validation_memory['dp3'] = [fp3]
-            validation_memory['dp4'] = [fp4]
-
-        if (fp2 not in validation_memory['dp2']
-                and fp1 in validation_memory['dp1']
-                and fp3 in validation_memory['dp3']
-                and fp4 in validation_memory['dp4']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp3'] = [fp3]
-            validation_memory['dp4'] = [fp4]
-
-        if (fp3 not in validation_memory['dp3']
-                and fp1 in validation_memory['dp1']
-                and fp2 in validation_memory['dp2']
-                and fp4 in validation_memory['dp4']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp2'] = [fp2]
-            validation_memory['dp4'] = [fp4]
-
-        if (fp4 not in validation_memory['dp4']
-                and fp1 in validation_memory['dp1']
-                and fp2 in validation_memory['dp2']
-                and fp3 in validation_memory['dp3']
-        ):
-            validation_memory['dp1'] = [fp1]
-            validation_memory['dp2'] = [fp2]
-            validation_memory['dp3'] = [fp3]
-
-
+    for i1 in range(0, len(Bulls_1)):
+        fp1, fp2, fp3, fp4 = Bulls_1[i1]
+# ------------------------------------------ 1
+        if all([fp1 in Ap1,
+                fp2 not in Ap2,
+                fp3 not in Ap3,
+                fp4 not in Ap4
+                ]):
+            Ap1 = [fp1]
+# ------------------------------------------ 2
+        elif all([fp2 in Ap2,
+                  fp1 not in Ap1,
+                  fp3 not in Ap3,
+                  fp4 not in Ap4
+                  ]):
+            Ap2 = [fp2]
+# ------------------------------------------ 3
+        elif all([fp3 in Ap3,
+                  fp1 not in Ap1,
+                  fp2 not in Ap2,
+                  fp4 not in Ap4
+                  ]):
+           Ap3 = [fp3]
+# ------------------------------------------ 4
+        elif all([fp4 in Ap4,
+                  fp1 not in Ap1,
+                  fp2 not in Ap2,
+                  fp3 not in Ap3
+                  ]):
+            Ap4 = [fp4]
+# ---------------------------------------------------------------
+    for i2 in range(0, len(Bulls_2)):
+        fp1, fp2, fp3, fp4 = Bulls_2[i2]
+# ------------------------------------------ 1&2
+        if all([fp1 in Ap1,
+                fp2 in Ap2,
+                fp3 not in Ap3,
+                fp4 not in Ap4
+                ]):
+            Ap1 = [fp1]
+            Ap2 = [fp2]
+# ------------------------------------------ 1&3
+        elif all([fp1 in Ap1,
+                  fp3 in Ap3,
+                  fp2 not in Ap2,
+                  fp4 not in Ap4
+                  ]):
+            Ap1 = [fp1]
+            Ap3 = [fp3]
+# ------------------------------------------ 1&4
+        elif all([fp1 in Ap1,
+                  fp4 in Ap4,
+                  fp2 not in Ap2,
+                  fp3 not in Ap3
+                  ]):
+            Ap1 = [fp1]
+            Ap4 = [fp4]
+# ------------------------------------------ 2&3
+        elif all([fp2 in Ap2,
+                  fp3 in Ap3,
+                  fp1 not in Ap1,
+                  fp4 not in Ap4
+                  ]):
+            Ap2 = [fp2]
+            Ap3 = [fp3]
+# ------------------------------------------ 2&4
+        elif all([fp2 in Ap2,
+                  fp4 in Ap4,
+                  fp1 not in Ap1,
+                  fp3 not in Ap3
+                  ]):
+            Ap2 = [fp2]
+            Ap4 = [fp4]
+# ------------------------------------------ 3&4
+        elif all([fp3 in Ap3,
+                  fp4 in Ap4,
+                  fp1 not in Ap1,
+                  fp2 not in Ap2
+                  ]):
+            Ap3 = [fp3]
+            Ap4 = [fp4]
+# ---------------------------------------------------------------
+    for i3 in range(0, len(Bulls_3)):
+        fp1, fp2, fp3, fp4 = Bulls_3[i3]
+# ------------------------------------------ 2&3&4
+        if all([fp1 not in Ap1,
+                fp2 in Ap2,
+                fp3 in Ap3,
+                fp4 in Ap4
+                ]):
+            Ap2 = [fp2]
+            Ap3 = [fp3]
+            Ap4 = [fp4]
+# ------------------------------------------ 1&3&4
+        elif all([fp2 not in Ap2,
+                  fp1 in Ap1,
+                  fp3 in Ap3,
+                  fp4 in Ap4
+                  ]):
+            Ap1 = [fp1]
+            Ap3 = [fp3]
+            Ap4 = [fp4]
+# ------------------------------------------ 1&2&4
+        elif all([fp3 not in Ap3,
+                  fp1 in Ap1,
+                  fp2 in Ap2,
+                  fp4 in Ap4
+                  ]):
+            Ap1 = [fp1]
+            Ap2 = [fp2]
+            Ap4 = [fp4]
+# ------------------------------------------ 1&2&3
+        elif all([fp4 not in Ap4,
+                  fp1 in Ap1,
+                  fp2 in Ap2,
+                  fp3 in Ap3
+                  ]):
+            Ap1 = [fp1]
+            Ap2 = [fp2]
+            Ap3 = [fp3]
 # //////////////////////////////////////////////////////////////////
-for i in range(0, 50):
+while True:
     # -----------------------------------------------------------------
-    generate_new_guess()
+    Generate_New_Guess()
     print(S)
     # -----------------------------------------------------------------
     try:
@@ -180,38 +179,30 @@ for i in range(0, 50):
         break
     # -----------------------------------------------------------------
     if bulls == 0:
-        validation_memory['dp1'].remove(p1)
-        validation_memory['dp2'].remove(p2)
-        validation_memory['dp3'].remove(p3)
-        validation_memory['dp4'].remove(p4)
+        Ap1.remove(p1)
+        Ap2.remove(p2)
+        Ap3.remove(p3)
+        Ap4.remove(p4)
 
-    if all(cows == 0, bulls == 0):
-        validation_memory['dp1'] = [
-            n for n in validation_memory['dp1'] if n not in current_guess]
-        validation_memory['dp2'] = [
-            n for n in validation_memory['dp2'] if n not in current_guess]
-        validation_memory['dp3'] = [
-            n for n in validation_memory['dp3'] if n not in current_guess]
-        validation_memory['dp4'] = [
-            n for n in validation_memory['dp4'] if n not in current_guess]
+    if cows == 0 and bulls == 0:
+        Ap1 = [n for n in Ap1 if n not in Current_Guess]
+        Ap2 = [n for n in Ap2 if n not in Current_Guess]
+        Ap3 = [n for n in Ap3 if n not in Current_Guess]
+        Ap4 = [n for n in Ap4 if n not in Current_Guess]
 
     if (cows + bulls) == 4:
-        validation_memory['dp1'] = [
-            n for n in validation_memory['dp1'] if n in current_guess]
-        validation_memory['dp2'] = [
-            n for n in validation_memory['dp2'] if n in current_guess]
-        validation_memory['dp3'] = [
-            n for n in validation_memory['dp3'] if n in current_guess]
-        validation_memory['dp4'] = [
-            n for n in validation_memory['dp4'] if n in current_guess]
+        Ap1 = [n for n in Ap1 if n in Current_Guess]
+        Ap2 = [n for n in Ap2 if n in Current_Guess]
+        Ap3 = [n for n in Ap3 if n in Current_Guess]
+        Ap4 = [n for n in Ap4 if n in Current_Guess]
     # -----------------------------------------------------------------
     if bulls == 1:
-        validation_memory['bulls1'].append(current_guess)
-    if bulls == 2:
-        validation_memory['bulls2'].append(current_guess)
-    if bulls == 3:
-        validation_memory['bulls3'].append(current_guess)
+        Bulls_1.append(Current_Guess)
+    elif bulls == 2:
+        Bulls_2.append(Current_Guess)
+    elif bulls == 3:
+        Bulls_3.append(Current_Guess)
     # -----------------------------------------------------------------
-    find_patterns()
-# End of (0:50) loop
-# //////////////////////////////////////////////////////////////////
+    Try_Reduce_Choices()
+# End of while loop
+# ///////////////////////////////////////////////////////////////////////////
