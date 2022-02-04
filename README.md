@@ -1,6 +1,9 @@
 # Bulls and Cows Game
 It was a problem solving game algorithm from Codeforces and I made it executable file for fun , why not 
 
+# TO Play The Game
+Download the code.exe file and try it
+
 # Rules Of The Game
 On a sheet of paper, you will think of secret string. This string consists only of digits and has the length 4.
 The digits in the string must be all different, no two or more equal digits are allowed.
