@@ -334,6 +334,8 @@ while True:
 
     if bulls == 4:
         print("End Of Game :GG")
+        print('press any to exit')
+        input()
         break
     # -----------------------------------------------------------------
     if bulls == 0:
