@@ -2,7 +2,7 @@
 It was a problem solving game algorithm from Codeforces and I made it executable file for fun , why not 
 
 # To Play The Game
-Download the code.exe file and try it
+Download the executable_game.exe file and try it
 
 # Rules Of The Game
 On a sheet of paper, you will think of secret string. This string consists only of digits and has the length 4.
